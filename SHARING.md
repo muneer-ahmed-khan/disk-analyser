@@ -4,7 +4,7 @@
 
 Built a read-only disk analyser for Coding Challenge #145. It distinguishes allocated from apparent size, avoids following symlinks, counts hard-linked storage once, and ranks the biggest files. Python, no runtime dependencies.
 
-Project: [add GitHub repository link]
+Project: https://github.com/muneer-ahmed-khan/disk-analyser
 
 #Python #CodingChallenges
 
@@ -16,7 +16,7 @@ It scans a directory without changing anything, reports allocated and apparent s
 
 The exercise highlights how filesystem size can be misleading: sparse files, hard links, and directory totals all need different handling. This version is intentionally read-only; interactive cleanup and a full graphical treemap are still future steps.
 
-Code: [add GitHub repository link]
+Code: https://github.com/muneer-ahmed-khan/disk-analyser
 Challenge: https://codingchallenges.substack.com/p/coding-challenge-145-disk-analyser
 
 #Python #CodingChallenges #BuildInPublic
