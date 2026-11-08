@@ -43,6 +43,12 @@ class ScannerTests(unittest.TestCase):
         self.assertAlmostEqual(sum(w*h for _, _, _, w, h in rects), 5000)
         self.assertAlmostEqual(next(w*h for i, _, _, w, h in rects if i is a), 3750)
 
+    def test_treemap_ignores_zero_area_entries(self):
+        zero = type("I", (), {"disk": 0, "apparent": 0})()
+        nonzero = type("I", (), {"disk": 2048, "apparent": 2048})()
+        rects = squarify([zero, nonzero], 0, 0, 80, 24)
+        self.assertEqual([entry[0] for entry in rects], [nonzero])
+
 
 if __name__ == "__main__":
     unittest.main()

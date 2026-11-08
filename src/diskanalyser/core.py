@@ -109,7 +109,9 @@ def squarify(items: list[Item], x: float, y: float, width: float, height: float,
     if total == 0:
         total = len(items)
         weight = lambda _i: 1
-    scaled = sorted(((weight(i) * width * height / total, i) for i in items), reverse=True, key=lambda x: x[0])
+    # A zero-allocation entry has no treemap area. Exclude it from the geometry
+    # while keeping it in the browser's selection list.
+    scaled = sorted(((weight(i) * width * height / total, i) for i in items if weight(i) > 0), reverse=True, key=lambda x: x[0])
     result = []
     rect = [x, y, width, height]
 

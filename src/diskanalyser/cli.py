@@ -39,10 +39,10 @@ def main(argv=None) -> int:
     # Nested generated/cache roots overlap; report only outermost candidates.
     candidates = [i for i in candidates if not any(i.path != p.path and i.path.is_relative_to(p.path) for p in candidates)]
     print(f"Disk Analyser — {root.path}")
-    print(f"Totals shown: {metric} size · {human(bytes_total)} ({human(root.disk)} allocated, {human(root.apparent)} apparent)")
-    print(f"{files:,} file names · {links:,} symlinks · {root.count:,} files in directories")
+    print(f"Totals: {human(root.disk)} allocated on disk · {human(root.apparent)} apparent file size")
+    print(f"Files: {files:,} paths (hard-link names count separately) · {links:,} symlinks")
     if candidates:
-        print(f"Likely reclaimable (heuristic): {human(sum(i.disk for i in candidates))}")
+        print(f"Possible reclaimable space (folder-name estimate, review before cleanup): {human(sum(i.disk for i in candidates))}")
     print("\nLargest files (allocated size):")
     for item in largest(root, args.largest, args.min_size, args.older_days, apparent=args.apparent):
         print(f"  {human(item.apparent if args.apparent else item.disk):>10}  {item.path}")
@@ -51,7 +51,7 @@ def main(argv=None) -> int:
     for item in dirs:
         mark = "  [rebuildable/cache candidate]" if reclaimable(item) else ""
         print(f"  {human(item.disk):>10}  {item.path}{mark}")
-    print("\nTreemap — largest immediate children (area proportional to allocated bytes):")
+    print("\nTreemap — largest immediate children (area proportional to allocated bytes; labels may be shortened):")
     show_treemap(root, shutil.get_terminal_size((88, 24)).columns)
     if errors:
         print(f"\nWarnings ({len(errors)}):")
